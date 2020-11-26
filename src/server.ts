@@ -16,6 +16,7 @@ const handle = app.getRequestHandler();
   server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', apiBaseUrl);
     const schema = req.headers['x-forwarded-proto'];
+    console.log("AAA")
     console.log(schema);
     if (isProduction && schema !== 'https') {
       return res.redirect(`https://${req.headers.host}${req.url}`);
