@@ -1,13 +1,4 @@
 env: standard
 runtime: nodejs12 # or nodejs10
 
-env_variables:
-  BUCKET_NAME: "example-gcs-bucket"
-
-handlers:
-- url: /.*
-  secure: always
-  redirect_http_response_code: 301
-  script: auto
-
 service: google-node-app

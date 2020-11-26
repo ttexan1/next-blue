@@ -1,27 +1,33 @@
-// server.js
-import { createServer } from 'http';
-import { parse } from 'url';
+import express from 'express';
 import next from 'next';
+import { parse } from 'url';
 
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
+const DEFAULT_API_BASE_URL = 'https://console-api-staging.dooh-geniee.jp';
 
-app.prepare().then(() => {
-  createServer((req, res) => {
-    // Be sure to pass `true` as the second argument to `url.parse`.
-    // This tells it to parse the query portion of the URL.
-    const parsedUrl = parse(req.url ?? '', true)
-    const { pathname, query } = parsedUrl
+// 空文字渡した時は自己責任ってことで
+const apiBaseUrl = process.env.API_BASE_URL ?? DEFAULT_API_BASE_URL;
+const isProduction = process.env.NODE_ENV === 'production';
+const app = next({ dev: isProduction });
+const handle = app.getRequestHandler();
 
-    if (pathname === '/a') {
-      app.render(req, res, '/a', query)
-    } else if (pathname === '/b') {
-      app.render(req, res, '/b', query)
-    } else {
-      handle(req, res, parsedUrl)
+(async (): Promise<void> => {
+  await app.prepare();
+  const server = express();
+  server.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', apiBaseUrl);
+    const schema = req.headers['x-forwarded-proto'];
+    console.log(schema);
+    if (isProduction && schema !== 'https') {
+      return res.redirect(`https://${req.headers.host}${req.url}`);
     }
-  }).listen(8080, () => {
-    console.log('> Ready on http://localhost:8080')
-  })
-})
+    next();
+  });
+  // handle nextjs routing
+  server.all('*', (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    handle(req, res, parsedUrl);
+  });
+
+  await server.listen(8080);
+  console.log(`Ready on http://localhost:${8080}`); // eslint-disable-line no-console
+})();

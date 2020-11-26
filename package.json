@@ -10,6 +10,8 @@
     "deploy": "gcloud app deploy"
   },
   "dependencies": {
+    "@types/express": "^4.17.9",
+    "express": "^4.17.1",
     "next": "10.0.2",
     "react": "17.0.1",
     "react-dom": "17.0.1"
