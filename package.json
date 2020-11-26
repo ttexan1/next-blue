@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "npx ts-node src/server.ts",
-    "build": "NODE_ENV=production next build && tsc --project tsconfig.server.json",
-    "gcp-build": "NODE_ENV=production next build && tsc --project tsconfig.server.json",
+    "build": "next build && tsc --project tsconfig.server.json",
+    "gcp-build": "next build && tsc --project tsconfig.server.json",
     "start": "NODE_ENV=production node build/server.js",
     "deploy": "gcloud app deploy"
   },
