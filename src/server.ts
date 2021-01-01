@@ -9,7 +9,6 @@ const handle = app.getRequestHandler();
 (async () => {
   await app.prepare();
   const server = express();
-  console.log("Deployed")
   server.use((req, res, next) => {
     // const schema = req.headers['x-forwarded-proto'];
     // if (isProduction && schema !== 'https') {
@@ -23,6 +22,7 @@ const handle = app.getRequestHandler();
     handle(req, res, parsedUrl);
   });
 
-  await server.listen(8080);
-  console.log(`Ready on http://localhost:${8080}`);
+  await server.listen(8082);
+  // eslint-disable-next-line no-console
+  console.log(`Ready on http://localhost:${8082}`);
 })();
