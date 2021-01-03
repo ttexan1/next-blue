@@ -65,13 +65,11 @@
     "block-spacing": ["error", "always"],
     "object-curly-spacing": ["error", "always"],
     "object-curly-newline": ["error", { "multiline": true }],
-    "array-element-newline": ["error", {
-      "multiline": true,
-      "minItems": 10
-    }],
+    // "array-element-newline": ["error", {
+    //   "multiline": true
+    // }],
     "array-bracket-newline": ["error", {
-      "multiline": true,
-      "minItems": 10
+      "multiline": true
     }],
     // note you must disable the base rule as it can report incorrect errors
     "no-empty-function": "off",

@@ -1,5 +1,7 @@
 import * as React from 'react';
+import DropZone from './DropZone';
 // import Element from './Element';
+
 import List from './List';
 
 type ElementFactor = {
@@ -16,7 +18,7 @@ type Props = {
 const DragAndDrop: React.FC<Props> = ({ allElements }: Props) => {
   // console.log(elements.length)
   return (
-    <>
+    <div style={{ display: 'block' }}>
       <div style={{ display: 'flex' }}>
         {allElements.map((list, ii) => {
           return (
@@ -27,7 +29,8 @@ const DragAndDrop: React.FC<Props> = ({ allElements }: Props) => {
           );
         })}
       </div>
-    </>
+      <DropZone />
+    </div>
   );
 
 };
