@@ -1,5 +1,7 @@
-import * as React from 'react';
-import DragAndDrop from '../../components/DragAndDrop';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import DragAndDrop from 'src/components/DragAndDrop';
 
 type ElementFactor = {
   name: string;
@@ -7,7 +9,7 @@ type ElementFactor = {
   index: number;
 };
 
-const Product: React.FC = () => {
+const Wrapper = () => {
   const [elements, setElements] = React.useState<ElementFactor[][]>([
     [{ name: '要素1-1', date: '1201', index: 1 }, { name: '要素1-2', date: '1201', index: 2 }, { name: '要素1-3', date: '1201', index: 3 }],
     [{ name: '要素2-1', date: '1202', index: 1 }, { name: '要素2-2', date: '1202', index: 2 }, { name: '要素2-3', date: '1202', index: 3 }],
@@ -35,4 +37,15 @@ const Product: React.FC = () => {
   );
 };
 
-export default Product;
+describe('DragAndDrop Component test', () => {
+  it('can drag', () => {
+    // const allElements = [
+    //   [{ name: '要素1-1', date: '1205', index: 1 }, { name: '要素1-2', date: '1205', index: 2 }, { name: '要素1-3', date: '1205', index: 3 }],
+    //   [{ name: '要素2-1', date: '1206', index: 1 }, { name: '要素2-2', date: '1206', index: 2 }, { name: '要素2-3', date: '1206', index: 3 }],
+    //   [{ name: '要素3-1', date: '1207', index: 1 }, { name: '要素3-2', date: '1207', index: 2 }, { name: '要素3-3', date: '1207', index: 3 }],
+    // ];
+    // render(<DragAndDrop allElements={allElements} setElements={() => {}} />);
+    render(<Wrapper />);
+    expect(screen.getByText('要素1-12')).toBeInTheDocument();
+  });
+});

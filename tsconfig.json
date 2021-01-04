@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "module": "commonjs",
+    // "module": "esnext",
+    "strict": true,
+    "esModuleInterop": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -9,12 +13,9 @@
     "baseUrl": ".",
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "downlevelIteration": true,
-    "esModuleInterop": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -23,20 +24,6 @@
       "src/@types"
     ],
     "jsx": "preserve",
-    "paths": {
-      "types/*": [
-        "src/types/*"
-      ],
-      "components/*": [
-        "src/components/*"
-      ],
-      "hooks/*": [
-        "src/hooks/*"
-      ],
-      "utils/*": [
-        "src/utils/*"
-      ],
-    }
   },
   "exclude": [
     "node_modules"

@@ -1,4 +1,4 @@
-import { square } from 'utils/math';
+import { square } from 'src/utils/math';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('Sample.ts Functions TestCases', () => {
