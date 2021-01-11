@@ -1,33 +1,28 @@
 import * as React from 'react';
-import DragAndDrop from '../../components/DragAndDrop';
-
-type ElementFactor = {
-  name: string;
-  date: string;
-  index: number;
-};
+import ItemList from 'src/components/DragAndDrop';
+import { ElementFactor } from 'src/hooks/usePlaylist';
 
 const Product: React.FC = () => {
-  const [elements, setElements] = React.useState<ElementFactor[][]>([
-    [{ name: '要素1-1', date: '1201', index: 1 }, { name: '要素1-2', date: '1201', index: 2 }, { name: '要素1-3', date: '1201', index: 3 }],
-    [{ name: '要素2-1', date: '1202', index: 1 }, { name: '要素2-2', date: '1202', index: 2 }, { name: '要素2-3', date: '1202', index: 3 }],
-    [{ name: '要素3-1', date: '1203', index: 1 }, { name: '要素3-2', date: '1203', index: 2 }, { name: '要素3-3', date: '1203', index: 3 }],
-    [{ name: '要素4-1', date: '1204', index: 1 }, { name: '要素4-2', date: '1204', index: 2 }, { name: '要素4-3', date: '1204', index: 3 }],
-    [{ name: '要素5-1', date: '1205', index: 1 }, { name: '要素5-2', date: '1205', index: 2 }, { name: '要素5-3', date: '1205', index: 3 }],
-    [{ name: '要素6-1', date: '1206', index: 1 }, { name: '要素6-2', date: '1206', index: 2 }, { name: '要素6-3', date: '1206', index: 3 }],
-    [{ name: '要素7-1', date: '1207', index: 1 }, { name: '要素7-2', date: '1207', index: 2 }, { name: '要素7-3', date: '1207', index: 3 }],
-    [{ name: '要素8-1', date: '1208', index: 1 }, { name: '要素8-2', date: '1208', index: 2 }, { name: '要素8-3', date: '1208', index: 3 }],
-    [{ name: '要素9-1', date: '1209', index: 1 }, { name: '要素9-2', date: '1209', index: 2 }, { name: '要素9-3', date: '1209', index: 3 }],
-    [{ name: '要素10-1', date: '1210', index: 1 }, { name: '要素10-2', date: '1210', index: 2 }, { name: '要素10-3', date: '1210', index: 3 }],
-    [{ name: '要素11-1', date: '1211', index: 1 }, { name: '要素11-2', date: '1211', index: 2 }, { name: '要素11-3', date: '1211', index: 3 }],
-    [{ name: '要素12-1', date: '1212', index: 1 }, { name: '要素12-2', date: '1212', index: 2 }, { name: '要素12-3', date: '1212', index: 3 }],
-    [{ name: '要素13-1', date: '1213', index: 1 }, { name: '要素13-2', date: '1213', index: 2 }, { name: '要素13-3', date: '1213', index: 3 }],
-    [{ name: '要素14-1', date: '1214', index: 1 }, { name: '要素14-2', date: '1214', index: 2 }, { name: '要素14-3', date: '1214', index: 3 }],
-    [{ name: '要素15-1', date: '1215', index: 1 }, { name: '要素15-2', date: '1215', index: 2 }, { name: '要素15-3', date: '1215', index: 3 }],
+  const [elements, setElements] = React.useState<ElementFactor[]>([
+    { date: '1201', screenId: 1, items: [{ name: '要素1-1', duration: 10 }, { name: '要素1-2', duration: 30 }, { name: '要素1-3', duration: 15 }] },
+    { date: '1201', screenId: 2, items: [{ name: '要素2-1', duration: 10 }, { name: '要素2-2', duration: 30 }, { name: '要素2-3', duration: 15 }] },
+    { date: '1202', screenId: 1, items: [{ name: '要素3-1', duration: 10 }, { name: '要素3-2', duration: 30 }, { name: '要素3-3', duration: 15 }] },
+    // { date: '1202', screenId: 2, items: [{ name: '要素4-1', duration: 10 }, { name: '要素4-2', duration: 30 }, { name: '要素4-3', duration: 15 }] },
+    { date: '1202', screenId: 2, items: [{ name: '要素4-1', duration: 10 }, { name: '要素4-2', duration: 30 }, { name: '要素4-3', duration: 15 }, { name: '要素4-4', duration: 15 }] },
+    { date: '1203', screenId: 1, items: [{ name: '要素5-1', duration: 10 }, { name: '要素5-2', duration: 30 }, { name: '要素5-3', duration: 15 }] },
+    { date: '1203', screenId: 2, items: [{ name: '要素6-1', duration: 10 }, { name: '要素6-2', duration: 30 }, { name: '要素6-3', duration: 15 }] },
+    { date: '1204', screenId: 1, items: [{ name: '要素7-1', duration: 10 }, { name: '要素7-2', duration: 30 }, { name: '要素7-3', duration: 15 }] },
+    { date: '1204', screenId: 2, items: [{ name: '要素8-1', duration: 10 }, { name: '要素8-2', duration: 30 }, { name: '要素8-3', duration: 15 }] },
+    { date: '1205', screenId: 1, items: [{ name: '要素9-1', duration: 10 }, { name: '要素9-2', duration: 30 }, { name: '要素9-3', duration: 15 }] },
+    { date: '1205', screenId: 2, items: [{ name: '要素10-1', duration: 10 }, { name: '要素10-2', duration: 30 }, { name: '要素10-3', duration: 15 }] },
+    { date: '1206', screenId: 1, items: [{ name: '要素11-1', duration: 10 }, { name: '要素11-2', duration: 30 }, { name: '要素11-3', duration: 15 }] },
+    { date: '1206', screenId: 2, items: [{ name: '要素12-1', duration: 10 }, { name: '要素12-2', duration: 30 }, { name: '要素12-3', duration: 15 }] },
+    { date: '1207', screenId: 1, items: [{ name: '要素13-1', duration: 10 }, { name: '要素13-2', duration: 30 }, { name: '要素13-3', duration: 15 }] },
+    { date: '1207', screenId: 2, items: [{ name: '要素14-1', duration: 10 }, { name: '要素14-2', duration: 30 }, { name: '要素14-3', duration: 15 }] },
   ]);
   return (
     <>
-      <DragAndDrop
+      <ItemList
         allElements={elements}
         setElements={setElements}
       />
