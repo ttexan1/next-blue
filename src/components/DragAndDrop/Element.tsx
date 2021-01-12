@@ -13,9 +13,8 @@ type Props = {
 };
 
 const imageUrls = [
-  'https://media.dooh.geniee.jp/mediafiles-staging/natives/01EGFW774W1WPH3SB9SNQ182T0',
-  'https://media.dooh.geniee.jp/mediafiles-staging/natives/01EGG13GQFN1EH57Q134K40T3Y',
   'https://media.dooh.geniee.jp/mediafiles-staging/natives/01EH1PD60FCC3TF40ZMRT5P8JV',
+  'https://media.dooh.geniee.jp/mediafiles-staging/natives/01EGFW774W1WPH3SB9SNQ182T0',
   'https://media.dooh.geniee.jp/mediafiles-staging/natives/01EHBM2RRYY4V2VVCMW57BC6B9',
   'https://media.dooh.geniee.jp/mediafiles-staging/natives/01EKCGENHM7K07XM6PKG5GANVT',
   'https://media.dooh.geniee.jp/mediafiles-staging/natives/01ER3T4791H7K5118J2M220F33',
@@ -26,20 +25,23 @@ const imageUrls = [
   'https://media.dooh.geniee.jp/mediafiles-staging/thumbnails/187',
 ];
 
-const Element = ({
+const Element = React.memo(({
   name,
   date,
   index,
   screenId,
 }: Props) => {
+  const [isDragging, setIsDragging] = React.useState(false);
   const onDragStart = React.useCallback((e: React.DragEvent) => {
     e.dataTransfer.setData('date', date);
     e.dataTransfer.setData('screenId', String(screenId));
     e.dataTransfer.setData('index', String(index));
+    setIsDragging(true);
   }, [date, index, screenId]);
 
-  const onDragOver = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
+  const onDragEnd = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    setIsDragging(false);
   }, []);
   // const [currenImgUrl, setImgUrl] = React.useState(imageUrls[0]);
   return (
@@ -49,8 +51,8 @@ const Element = ({
         data-name={name}
         data-date={date}
         draggable
-        onDragStart={onDragStart}
-        onDragOver={onDragOver}>
+        onDragEnd={onDragEnd}
+        onDragStart={onDragStart}>
         <p>{name}</p>
         <Image
           src={imageUrls[0]}
@@ -71,6 +73,7 @@ const Element = ({
           margin: ${CELLMARGIN}px;
           padding: 8px;
           height: ${CELLHEIGHT}px;
+          opacity: ${isDragging ? 0.01 : 1};
         }
         p {
           margin: 8px;
@@ -89,6 +92,6 @@ const Element = ({
       </div> */}
     </>
   );
-};
+});
 
 export default Element;

@@ -10,7 +10,7 @@ type Props = {
   setElements: React.Dispatch<React.SetStateAction<ElementFactor[]>>;
 };
 
-const Playlist = ({
+const Playlist = React.memo(({
   onDrop,
   list,
   allElements,
@@ -61,7 +61,8 @@ const Playlist = ({
       </div>
       <style jsx>{`
         .playlist {
-          border: 1px solid #777777;
+          border: 1px solid #111111;
+          margin-right: 4px;
           border-right: none;
           background: ${color};
         }
@@ -87,6 +88,6 @@ const Playlist = ({
       `}</style>
     </div>
   );
-};
+});
 
 export default Playlist;
