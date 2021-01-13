@@ -1,12 +1,30 @@
 import * as React from 'react';
 
 const Experiment = (): React.ReactElement => {
+  // const [objState, setObjState] = React.useState({ name: 'World' });
+  // React.useEffect(() => {
+  //   setObjState({ name: 'World' });
+  // }, []);
+
+  const [counters, ccc] = React.useState({
+    count1: 1,
+    count2: 2,
+  });
+
   return (
     <>
-      <Parent />
+      <button onClick={() => ccc({
+        count1: 1,
+        count2: 2,
+      })}>ボタン</button>
+      <Parent
+        counters={counters}
+      />
     </>
   );
 };
+Experiment.whyDidYouRender= true;
+
 export default Experiment;
 
 const ChildChild = React.memo(({ id }: {id:number}) => {
@@ -57,7 +75,7 @@ const Child3 = React.memo(({ count, setCount }: {count:number, setCount: () => v
   );
 });
 
-const Parent = () => {
+const Parent = React.memo(({ counters }: {counters: {count1: number, count2: number}}) => {
   console.log('render App');
   const [count1, setCount1] = React.useState(0);
   const [count2, setCount2] = React.useState(0);
@@ -72,11 +90,15 @@ const Parent = () => {
         <p>App: {count1}</p>
         <div><Child count={count2} setCount={setPlusCount} /></div>
         <div><Child2 count={count2} setCount={setPlusCount} /></div>
-        <div><Child3 count={count2} setCount={setPlusCount} /></div>
+        <div><Child3 count={count2} setCount={() => setCount2(c => c+1)} /></div>
         {/* <Child count={count2} setCount={() => setCount2(c => c+1)} />
       <Child2 count={count2} setCount={() => setCount2(c => c+1)} />
       <Child3 count={count2} setCount={() => setCount2(c => c+1)} /> */}
+        <p>{counters.count1}</p>
+        <p>{counters.count2}</p>
       </div>
     </>
   );
-};
+});
+
+Parent.whyDidYouRender = true;
