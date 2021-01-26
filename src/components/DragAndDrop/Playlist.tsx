@@ -16,19 +16,20 @@ const Playlist = React.memo(({
   allElements,
   setElements,
 }: Props) => {
-  const [color, setColor] = React.useState('#FFFFFF');
+  // const [color, setColor] = React.useState('#FFFFFF');
   const onDragOver = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setColor('#99FFFF');
+    // setColor('#99FFFF');
   }, []);
   const onDragLeave = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setColor('#FFFFFF');
+    // setColor('#FFFFFF');
   }, []);
   const onDrop_ = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
     onDrop(e);
-    setColor('#FFFFFF');
+    // setColor('#FFFFFF');
   }, [onDrop]);
+  // console.log(allElements);
   return (
     <div
       data-date={list.date}
@@ -44,10 +45,11 @@ const Playlist = React.memo(({
       <div
         className="contents">
         {list.items.map((elm, idx) => {
+          // console.log(`${list.date}-${elm.name}-${idx}`);
           return (
             <React.Fragment key={idx}>
               <Element
-                key={elm.name + idx}
+                key={`${list.date}-${elm.name}-${idx}`}
                 name={elm.name}
                 date={list.date}
                 screenId={list.screenId}
@@ -64,7 +66,7 @@ const Playlist = React.memo(({
           border: 1px solid #111111;
           margin-right: 4px;
           border-right: none;
-          background: ${color};
+          // background: $color};
         }
         .title {
           text-align: center;

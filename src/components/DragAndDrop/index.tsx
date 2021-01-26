@@ -36,8 +36,13 @@ export const reOrderElements = <T extends unknown>(arr: T[], current: number, ne
       .concat(arr.slice(current+1, arr.length));
 };
 
+const newLists = { date: '', screenId: 0, items: [{ duration: 15, name: '新しいアイテム' }] };
+
 const DragAndDrop: React.FC<Props> = ({ allElements, setElements }: Props) => {
   const playlistRef = React.useRef<HTMLDivElement>(null);
+  const onDragOverTrash = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  }, []);
   const onDrop = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!playlistRef.current) { return; }
@@ -53,6 +58,7 @@ const DragAndDrop: React.FC<Props> = ({ allElements, setElements }: Props) => {
     const srcScreenId = e.dataTransfer.getData('screenId');
     const srcDate = e.dataTransfer.getData('date');
     const srcIndex = Number(e.dataTransfer.getData('index'));
+    const dragType = e.dataTransfer.getData('dragType');
 
     const original = allElements.map(e => e);
     const newState = original.map((list) => {
@@ -66,7 +72,10 @@ const DragAndDrop: React.FC<Props> = ({ allElements, setElements }: Props) => {
         return list;
       }
       if (list.date === targetDate && list.screenId === Number(targetScreenId)) {
-        const src = allElements.find(ef => ef.date === srcDate && ef.screenId === Number(srcScreenId));
+        let src = allElements.find(ef => ef.date === srcDate && ef.screenId === Number(srcScreenId));
+        if (!src && dragType === 'new') {
+          src = newLists;
+        }
         const newItems = src ?
           list.items.slice(0, targetIndex)
             .concat({ ...src.items[srcIndex] })
@@ -82,23 +91,57 @@ const DragAndDrop: React.FC<Props> = ({ allElements, setElements }: Props) => {
     });
     setElements(newState);
   }, [allElements, setElements]);
+
+  const onDragStartNew = React.useCallback((e: React.DragEvent) => {
+    e.dataTransfer.setData('date', '');
+    e.dataTransfer.setData('screenId', '');
+    e.dataTransfer.setData('index', '0');
+    e.dataTransfer.setData('dragType', 'new');
+  }, []);
+
+  const onDragEnd = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  }, []);
   return (
-    <div ref={playlistRef} className="outside-wrapper">
+    <div className="flex">
+      <div ref={playlistRef} className="outside-wrapper">
+        <div
+          className="inner-wrapper">
+          {allElements.map((list, ii) => {
+            return (
+              <Playlist
+                key={ii}
+                list={list}
+                onDrop={onDrop}
+                allElements={allElements}
+                setElements={setElements}
+              />
+            );
+          })}
+        </div>
+      </div>
+      <div className="new-elements">
+        <div
+          className="element-cell"
+          style={{ background: 'blue' }}
+          data-name={'newData'}
+          draggable
+          onDragEnd={onDragEnd}
+          onDragStart={onDragStartNew}>
+          <p>{'newDate'}</p>
+        </div>
+      </div>
       <div
-        className="inner-wrapper">
-        {allElements.map((list, ii) => {
-          return (
-            <Playlist
-              key={ii}
-              list={list}
-              onDrop={onDrop}
-              allElements={allElements}
-              setElements={setElements}
-            />
-          );
-        })}
+        onDragOver={onDragOverTrash}
+        onDrop={onDrop}
+        onDragEnter={() => { console.log('SS'); }}
+        className="trashbox">
+        Trash
       </div>
       <style jsx>{`
+        .flex{
+          display: flex;
+        }
         .outside-wrapper {
           margin: 32px;
           padding: 16px;
@@ -110,6 +153,14 @@ const DragAndDrop: React.FC<Props> = ({ allElements, setElements }: Props) => {
         .inner-wrapper {
           display: flex;
           height: 1000px;
+        }
+        .trashbox {
+          width: 150px;
+          height: 150px;
+          line-height: 150px;
+          margin: 32px;
+          background: rgba(255, 0, 0, .3);
+          text-align: center;
         }
       `}</style>
     </div>
