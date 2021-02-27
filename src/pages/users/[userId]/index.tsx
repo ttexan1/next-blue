@@ -10,12 +10,25 @@ export const getServerSideProps: GetServerSideProps<{ name: string, userId: numb
 
 const User = ({ name, userId }: { name: string, userId: number }): React.ReactElement => {
   const router = useRouter();
+  const callback = React.useCallback(() => {
+  }, []);
   return (
     <>
+      !AAAAAAAAA
+      <Child ss={'SS文字列'} />
       <button onClick={() => router.back()}>戻る</button>
       {userId}{name}
+      <button onClick={callback}>!!!</button>
     </>
   );
 };
 
 export default User;
+
+const Child = ({ ss }: { ss: string }) => {
+  return (
+    <>
+      <p>{ss}</p>
+    </>
+  );
+};

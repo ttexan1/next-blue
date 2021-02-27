@@ -22,7 +22,7 @@ const handle = app.getRequestHandler();
     handle(req, res, parsedUrl);
   });
 
-  await server.listen(8082);
+  await server.listen(8080);
   // eslint-disable-next-line no-console
-  console.log(`Ready on http://localhost:${8082}`);
+  console.log(`Ready on http://localhost:${8080}`);
 })();

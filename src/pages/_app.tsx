@@ -2,8 +2,11 @@ import * as React from 'react';
 import { AppProps } from 'next/app';
 import '../styles/globals.css';
 import '../scripts/wdyr';
+// import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+  // console.log('renderToString', renderToString(<Component />));
+  // console.log('renderToStaticMarkup', renderToStaticMarkup(<Component />));
   return <Component {...pageProps} />;
 };
 
