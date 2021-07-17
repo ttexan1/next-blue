@@ -1,0 +1,12 @@
+steps:
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - config
+      - set
+      - app/cloud_build_timeout
+      - "7200s"
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - app
+      - deploy
+timeout: "7200s"
